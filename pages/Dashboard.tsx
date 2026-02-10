@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Search, Plus, MoreHorizontal, FlaskConical } from 'lucide-react';
+import { Search, Plus, FlaskConical } from 'lucide-react';
 import { Project } from '../types';
 import { MOCK_LAB_REPORTS } from '../constants';
 import ProjectCard from '../components/ProjectCard';
 import NewProjectModal from '../components/NewProjectModal';
 import ProjectDetailsModal from '../components/ProjectDetailsModal';
 import ProfileHeader from '../components/ProfileHeader';
+import RecentReports from '../components/RecentReports';
 import { ResponsiveContainer, BarChart, Bar, Cell, Tooltip } from 'recharts';
 import { useSettings } from '../context/SettingsContext';
 
@@ -120,32 +121,7 @@ const Dashboard: React.FC<DashboardProps> = ({ projects, onAddProject, onUpdateP
          </div>
 
          {/* Recent Reports */}
-         <div className="bg-[#FFE4E1]/30 dark:bg-rose-900/10 rounded-[2.5rem] p-6 sm:p-8">
-            <div className="flex justify-between items-center mb-6">
-                <h3 className="font-bold text-gray-900 dark:text-slate-100">{t('recentReports')}</h3>
-                <button className="w-8 h-8 bg-white dark:bg-slate-700 rounded-full flex items-center justify-center text-gray-500 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-                    <MoreHorizontal size={16} />
-                </button>
-            </div>
-            <div className="space-y-4">
-                {MOCK_LAB_REPORTS.slice(0, 3).map((report, i) => (
-                    <div key={i} className="flex items-center gap-4 bg-white dark:bg-[#1e293b] p-4 rounded-2xl shadow-sm hover:scale-105 transition-transform cursor-pointer">
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                            i % 2 === 0 
-                                ? 'bg-rose-100 dark:bg-rose-500/20 text-rose-600 dark:text-rose-300' 
-                                : 'bg-orange-100 dark:bg-orange-500/20 text-orange-600 dark:text-orange-300'
-                        }`}>
-                            <FlaskConical size={20} />
-                        </div>
-                        <div className="flex-1 min-w-0 text-start">
-                            <h4 className="font-bold text-gray-900 dark:text-slate-100 text-sm truncate">{report.projectName}</h4>
-                            <p className="text-xs text-gray-500 dark:text-slate-400 truncate">{report.results[0]?.parameter} • {report.status}</p>
-                        </div>
-                        <span className="text-xs font-bold text-gray-400 dark:text-slate-500">4.8</span>
-                    </div>
-                ))}
-            </div>
-         </div>
+         <RecentReports />
       </div>
 
       {/* Main Content: Projects Grid */}

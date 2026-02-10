@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { MOCK_LAB_REPORTS } from '../constants';
 import { ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area, Tooltip, XAxis } from 'recharts';
+import ReportsDropdown from '../components/ReportsDropdown';
 
 const Reports: React.FC = () => {
   const [filter, setFilter] = useState('All');
@@ -37,6 +38,11 @@ const Reports: React.FC = () => {
     (filter === 'Passed' && r.status === 'Approved') ||
     (filter === 'Failed' && r.status === 'Failed')
   );
+
+  const handleReportAction = (action: string, report: any) => {
+    console.log(`Action: ${action} on report: ${report.id}`);
+    // Here you would implement logic to actually update the report status or trigger export
+  };
 
   return (
     <div className="space-y-8">
@@ -178,10 +184,13 @@ const Reports: React.FC = () => {
                         </div>
                      </div>
 
-                     <div className="flex-shrink-0">
-                         {report.status === 'Approved' && <CheckCircle className="text-green-500 dark:text-green-400" size={24} />}
-                         {report.status === 'Failed' && <XCircle className="text-red-500 dark:text-red-400" size={24} />}
-                         {report.status === 'Pending' && <Activity className="text-orange-500 dark:text-orange-400" size={24} />}
+                     <div className="flex items-center gap-3 flex-shrink-0">
+                        <div title={`Status: ${report.status}`}>
+                            {report.status === 'Approved' && <CheckCircle className="text-green-500 dark:text-green-400" size={24} />}
+                            {report.status === 'Failed' && <XCircle className="text-red-500 dark:text-red-400" size={24} />}
+                            {report.status === 'Pending' && <Activity className="text-orange-500 dark:text-orange-400" size={24} />}
+                        </div>
+                        <ReportsDropdown report={report} onAction={handleReportAction} />
                      </div>
                  </div>
              ))}
